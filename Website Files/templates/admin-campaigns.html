@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Management - ConnectO Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B00',
+                        secondary: '#FF8C38',
+                        light: '#FFF0E6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Admin Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="admin-panel.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                        <span class="ml-2 text-gray-500">Admin</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="flex items-center text-gray-700 hover:text-primary">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-gray-700">Admin User</span>
+                        <button class="text-gray-700 hover:text-primary">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg pt-16">
+        <div class="px-4 py-6">
+            <ul class="space-y-4">
+                <li>
+                    <a href="admin-panel.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-tachometer-alt w-6"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-users.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-users w-6"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-help-requests.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-hands-helping w-6"></i>
+                        <span>Help Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-campaigns.html" class="flex items-center text-primary">
+                        <i class="fas fa-bullhorn w-6"></i>
+                        <span>Campaigns</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-resources.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-book w-6"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-experts.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-user-md w-6"></i>
+                        <span>Experts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-analytics.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-chart-bar w-6"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-settings.html" class="flex items-center text-gray-700 hover:text-primary">
+                        <i class="fas fa-cog w-6"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-64 pt-16 min-h-screen">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Campaign Management</h1>
+                <div class="flex space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search campaigns..." class="w-64 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg transition duration-300" onclick="openNewCampaignModal()">
+                        <i class="fas fa-plus mr-2"></i>Create Campaign
+                    </button>
+                </div>
+            </div>
+
+            <!-- Campaign Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-bullhorn text-primary text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">Active</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-1">12</h3>
+                    <p class="text-gray-600">Active Campaigns</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-donate text-green-500 text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">This Month</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-1">$45,678</h3>
+                    <p class="text-gray-600">Total Donations</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-blue-500 text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">Total</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-1">1,234</h3>
+                    <p class="text-gray-600">Total Donors</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clock text-yellow-500 text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">Pending</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-1">5</h3>
+                    <p class="text-gray-600">Pending Campaigns</p>
+                </div>
+            </div>
+
+            <!-- Campaign Filters -->
+            <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                <div class="flex space-x-4">
+                    <button class="px-4 py-2 text-primary border-b-2 border-primary">
+                        All Campaigns (17)
+                    </button>
+                    <button class="px-4 py-2 text-gray-600 hover:text-primary">
+                        Active (12)
+                    </button>
+                    <button class="px-4 py-2 text-gray-600 hover:text-primary">
+                        Pending (5)
+                    </button>
+                    <button class="px-4 py-2 text-gray-600 hover:text-primary">
+                        Completed (25)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Campaigns Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Campaign Card 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c" alt="Campaign" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Education for All</h3>
+                                <p class="text-sm text-gray-500">Created by John Doe</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Raised: $15,000</span>
+                                <span>Goal: $50,000</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Ends in 20 days</span>
+                                <span class="text-primary">30% funded</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-end space-x-3">
+                            <button class="text-primary hover:text-secondary" onclick="openCampaignModal('1')">
+                                View Details
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-800">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campaign Card 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1469571486292-b53601010b89" alt="Campaign" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Medical Support Fund</h3>
+                                <p class="text-sm text-gray-500">Created by Sarah Johnson</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Raised: $25,000</span>
+                                <span>Goal: $40,000</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 62.5%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Ends in 10 days</span>
+                                <span class="text-primary">62.5% funded</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-end space-x-3">
+                            <button class="text-primary hover:text-secondary" onclick="openCampaignModal('2')">
+                                View Details
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-800">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campaign Card 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6" alt="Campaign" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Food Relief Program</h3>
+                                <p class="text-sm text-gray-500">Created by Mike Wilson</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                Pending
+                            </span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>Raised: $8,000</span>
+                                <span>Goal: $20,000</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-500">Ends in 15 days</span>
+                                <span class="text-primary">40% funded</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-end space-x-3">
+                            <button class="text-primary hover:text-secondary" onclick="openCampaignModal('3')">
+                                View Details
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-800">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-6 flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-700">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">9</span> of <span class="font-medium">17</span> campaigns
+                    </p>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-2 border rounded-md text-gray-600 hover:bg-gray-50">
+                        Previous
+                    </button>
+                    <button class="px-3 py-2 border rounded-md bg-primary text-white">1</button>
+                    <button class="px-3 py-2 border rounded-md text-gray-600 hover:bg-gray-50">2</button>
+                    <button class="px-3 py-2 border rounded-md text-gray-600 hover:bg-gray-50">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Details Modal -->
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden" id="campaignModal">
+        <div class="relative top-20 mx-auto p-5 border w-3/4 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Campaign Details</h3>
+                    <button onclick="closeCampaignModal()" class="text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c" alt="Campaign" class="w-full h-64 object-cover rounded-lg">
+                        <div class="mt-4">
+                            <h4 class="text-xl font-semibold text-gray-800">Education for All</h4>
+                            <p class="text-gray-600 mt-2">
+                                A campaign to provide education support for underprivileged children, including school supplies, uniforms, and tuition assistance.
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="font-medium text-gray-800 mb-2">Campaign Updates</h5>
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="font-medium text-gray-800">First milestone reached!</span>
+                                        <span class="text-sm text-gray-500">2 days ago</span>
+                                    </div>
+                                    <p class="text-gray-600">We've successfully provided supplies to our first batch of 50 students!</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="font-medium text-gray-800">New partnership announced</span>
+                                        <span class="text-sm text-gray-500">1 week ago</span>
+                                    </div>
+                                    <p class="text-gray-600">Local bookstore joins our initiative with 20% discount on all school supplies.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <h5 class="font-medium text-gray-800 mb-4">Campaign Statistics</h5>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="text-sm text-gray-500">Progress</label>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                        <span>$15,000 raised</span>
+                                        <span>$50,000 goal</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500">Donors</label>
+                                    <p class="text-gray-800">234 people</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500">Time Remaining</label>
+                                    <p class="text-gray-800">20 days</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500">Category</label>
+                                    <p class="text-gray-800">Education</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium text-gray-800 mb-4">Campaign Creator</h5>
+                            <div class="flex items-center mb-4">
+                                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Creator" class="w-12 h-12 rounded-full">
+                                <div class="ml-4">
+                                    <p class="font-medium text-gray-800">John Doe</p>
+                                    <p class="text-gray-500">Campaign Manager</p>
+                                </div>
+                            </div>
+                            <button class="w-full bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition duration-300">
+                                Contact Creator
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300" onclick="closeCampaignModal()">
+                        Close
+                    </button>
+                    <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary">
+                        Edit Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Campaign Modal -->
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden" id="newCampaignModal">
+        <div class="relative top-20 mx-auto p-5 border w-2/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Create New Campaign</h3>
+                    <button onclick="closeNewCampaignModal()" class="text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Campaign Title</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option>Education</option>
+                                <option>Medical</option>
+                                <option>Disaster Relief</option>
+                                <option>Community</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Goal Amount</label>
+                            <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                            <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                            <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Campaign Image</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                <div class="space-y-1 text-center">
+                                    <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3"></i>
+                                    <div class="flex text-sm text-gray-600">
+                                        <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-secondary">
+                                            <span>Upload a file</span>
+                                            <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                        </label>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <button type="button" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300" onclick="closeNewCampaignModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary">
+                            Create Campaign
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openCampaignModal(campaignId) {
+            document.getElementById('campaignModal').classList.remove('hidden');
+            // Add logic to fetch and display campaign details
+            console.log('Opening campaign:', campaignId);
+        }
+
+        function closeCampaignModal() {
+            document.getElementById('campaignModal').classList.add('hidden');
+        }
+
+        function openNewCampaignModal() {
+            document.getElementById('newCampaignModal').classList.remove('hidden');
+        }
+
+        function closeNewCampaignModal() {
+            document.getElementById('newCampaignModal').classList.add('hidden');
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchInput = document.querySelector('input[placeholder="Search campaigns..."]');
+            searchInput.addEventListener('input', function(e) {
+                // Add your search logic here
+                console.log('Searching for:', e.target.value);
+            });
+
+            // File upload preview
+            const fileUpload = document.getElementById('file-upload');
+            if (fileUpload) {
+                fileUpload.addEventListener('change', function(e) {
+                    // Add your file upload preview logic here
+                    console.log('File selected:', e.target.files[0]);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

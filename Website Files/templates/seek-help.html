@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seek Help - ConnectO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{{url_for('index')}}" class="text-primary font-bold text-2xl">ConnectO</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{url_for('index')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{url_for('seekhelp')}}" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="{{url_for('contribute')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="{{url_for('campaigns')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="{{url_for('resources')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="{{url_for('about_us')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login / Register</a>
+                    {% endif %}
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{url_for('index')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="{{url_for('seekhelp')}}" class="text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="{{url_for('contribute')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="{{url_for('campaigns')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="{{url_for('resources')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="{{url_for('about_us')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == False %}
+                <a href="{{url_for('login')}}" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login / Register</a>
+                {% else %}
+                <a href="{{url_for('logout')}}" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-light py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">How Can We Help You?</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    We're here to support you. Fill out the form below to tell us about your needs, or connect with our experts and volunteers directly.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Help Request Form -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Request Assistance</h2>
+                    <form id="helpRequestForm" method="post" enctype="multipart/form-data">
+                        <div class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" id="name" name="name" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+                            </div>
+
+                            <div>
+                                <label for="contact" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                                <input type="tel" id="contact" name="contact" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <input type="email" id="email" name="email" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+                            </div>
+
+                            <div>
+                                <label for="help-type" class="block text-sm font-medium text-gray-700">Type of Help Needed</label>
+                                <select id="help-type" name="help-type" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+                                    <option value="">Select type of help</option>
+                                    <option value="financial">Financial Assistance</option>
+                                    <option value="medical">Medical Support</option>
+                                    <option value="education">Educational Support</option>
+                                    <option value="food">Food and Basic Necessities</option>
+                                    <option value="shelter">Shelter</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="urgency" class="block text-sm font-medium text-gray-700">Urgency Level</label>
+                                <select id="urgency" name="urgency" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+                                    <option value="low">Low - Within a month</option>
+                                    <option value="medium">Medium - Within a week</option>
+                                    <option value="high">High - Within 48 hours</option>
+                                    <option value="immediate">Immediate - As soon as possible</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="description" class="block text-sm font-medium text-gray-700">Detailed Description</label>
+                                <textarea id="description" name="description" rows="4" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required></textarea>
+                            </div>
+
+                            <div>
+                                <label for="documents" class="block text-sm font-medium text-gray-700">Supporting Documents (if any)</label>
+                                <input type="file" id="documents" name="documents" class="mt-1 p-2 block w-full" multiple>
+                                <p class="mt-1 text-sm text-gray-500">Upload any relevant documents that support your request (optional)</p>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="w-full bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-md transition duration-300">
+                                    Submit Request
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Connect with Experts Section -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Connect with Experts</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex-shrink-0 mr-4">
+                                    <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="Expert" class="w-16 h-16 rounded-full">
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-lg font-medium text-gray-800">Dr. Aarya Jain</h3>
+                                    <p class="text-gray-600">Medical Consultant</p>
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">4.5 (120 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="ml-4 bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Connect
+                                </button>
+                            </div>
+
+                            <div class="flex items-center p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex-shrink-0 mr-4">
+                                    <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Expert" class="w-16 h-16 rounded-full">
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-lg font-medium text-gray-800">Sarena Doe</h3>
+                                    <p class="text-gray-600">Financial Advisor</p>
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">5.0 (89 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="ml-4 bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Connect
+                                </button>
+                            </div>
+
+                            <div class="flex items-center p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex-shrink-0 mr-4">
+                                    <img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Expert" class="w-16 h-16 rounded-full">
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-lg font-medium text-gray-800">Aman Gupta</h3>
+                                    <p class="text-gray-600">Education Specialist</p>
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">4.0 (75 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="ml-4 bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Connect
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Resources -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Quick Resources</h2>
+                        <div class="space-y-4">
+                            <a href="#" class="block p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-light rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-phone text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Emergency Helpline</h3>
+                                        <p class="text-sm text-gray-600">24/7 support for urgent needs</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="#" class="block p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-light rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-book text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Help Guides</h3>
+                                        <p class="text-sm text-gray-600">Step-by-step assistance guides</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="#" class="block p-4 border rounded-lg hover:border-primary transition duration-300">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-light rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-users text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Support Groups</h3>
+                                        <p class="text-sm text-gray-600">Connect with others in similar situations</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
+                    <p class="text-gray-400">
+                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: connecto@gmail.com</li>
+                        <li>Phone: +91 1234567891</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 ConnectO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectO - Connecting Hearts for Social Good</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(#2c3968 0.5px, transparent 0.5px), radial-gradient(#2c3968 0.5px, #ffffff 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+        alert("{{ messages[0] }}");
+    </script>
+    {% endif %}
+    {% endwith %}
+    <!-- Navigation -->
+    
+    <nav class="bg-white shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-primary font-bold text-2xl">ConnectO</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{url_for('seekhelp')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="{{url_for('contribute')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="{{url_for('campaigns')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="{{url_for('resources')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="{{url_for('about_us')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login
+                        / Register</a>
+                    {% endif %}
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{url_for('index')}}" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="seek-help.html"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="{{url_for('contribute')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="{{url_for('campaigns')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="{{url_for('resources')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="{{url_for('about_us')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == True %}
+                <a href="{{url_for('login')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login
+                    / Register</a>
+                {% else %}
+                <a href="{{url_for('logout')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 md:pt-32 md:pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 hero-pattern"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+                        Connecting Today for<br><span class="text-primary">A Better Tomorrow</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        ConnectO brings together those who need help and those who want to contribute. Join our
+                        community and be part of the change.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="{{url_for('seekhelp')}}"
+                            class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-base font-medium transition duration-300 text-center">
+                            Seek Help
+                        </a>
+                        <a href="{{url_for('contribute')}}"
+                            class="bg-white border-2 border-primary hover:bg-light text-primary px-6 py-3 rounded-md text-base font-medium transition duration-300 text-center">
+                            Contribute
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://plus.unsplash.com/premium_vector-1682299563947-60b74e3a97a9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dm9sdW50ZWVyfGVufDB8fDB8fHww"
+                        alt="People helping each other" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">How ConnectO Works</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Our platform makes it easy to seek help or contribute to social causes in various ways.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hands-helping text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Seek Help</h3>
+                    <p class="text-gray-600">
+                        Request assistance for yourself or others. Connect with experts and volunteers who can provide
+                        the support you need.
+                    </p>
+                    <a href="{{url_for('seekhelp')}}" class="mt-4 inline-block text-primary hover:text-secondary font-medium">
+                        Learn more <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <!-- Feature 2 -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hand-holding-heart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Contribute</h3>
+                    <p class="text-gray-600">
+                        Donate financially, give goods, provide services, or become a volunteer. Every contribution
+                        makes a difference.
+                    </p>
+                    <a href="{{url_for('contribute')}}" class="mt-4 inline-block text-primary hover:text-secondary font-medium">
+                        Learn more <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <!-- Feature 3 -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bullhorn text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Campaigns</h3>
+                    <p class="text-gray-600">
+                        Support fundraisers and campaigns for recent tragedies or ongoing social causes that need
+                        immediate attention.
+                    </p>
+                    <a href="{{url_for('campaigns')}}" class="mt-4 inline-block text-primary hover:text-secondary font-medium">
+                        Learn more <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Campaigns Section -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Active Campaigns</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Join these ongoing campaigns and make an immediate impact.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Campaign 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://media.istockphoto.com/id/2075602123/photo/group-of-rural-school-girls-in-uniform-sitting-in-school-corridor-working-on-laptop-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=cypCtbSuZtj2NzztwdOVmwAdickk3Q218ZRD0TTox6Q="
+                        alt="Education for All" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Education for All</h3>
+                        <p class="text-gray-600 mb-4">
+                            Help provide educational resources to underprivileged children in rural areas.
+                        </p>
+                        <div class="mb-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-sm">
+                                <span class="text-gray-600">&#8377;15,000 raised</span>
+                                <span class="text-gray-600">&#8377;20,000 goal</span>
+                            </div>
+                        </div>
+                        <a href="#"
+                            class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Donate Now
+                        </a>
+                    </div>
+                </div>
+                <!-- Campaign 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://plus.unsplash.com/premium_photo-1678917827802-721b5f5b4bf0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZW1wbG95bWVudHxlbnwwfHwwfHx8MA%3D%3D"
+                        alt="Empolyment Support" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Employement Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            Support the community by sharing your skills.
+                        </p>
+                        <div class="mb-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 45%"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-sm">
+                                <span class="text-gray-600">&#8377;9,000 raised</span>
+                                <span class="text-gray-600">&#8377;20,000 goal</span>
+                            </div>
+                        </div>
+                        <a href="#"
+                            class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Donate Now
+                        </a>
+                    </div>
+                </div>
+                <!-- Campaign 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1647104370074-8da1264c50ab?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHJlc2N1ZSUyMHRlYW18ZW58MHx8MHx8fDA%3D"
+                        alt="Disaster Relief" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Disaster Relief</h3>
+                        <p class="text-gray-600 mb-4">
+                            Help families affected by recent natural disasters rebuild their lives.
+                        </p>
+                        <div class="mb-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-sm">
+                                <span class="text-gray-600">&#8377;27,000 raised</span>
+                                <span class="text-gray-600">&#8377;30,000 goal</span>
+                            </div>
+                        </div>
+                        <a href="#"
+                            class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Donate Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Impact Stats Section -->
+    <section class="py-12 bg-primary text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Our Impact</h2>
+                <p class="text-lg max-w-3xl mx-auto opacity-90">
+                    Together, we're making a difference in communities around the world.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" id="impact-count-1">0</div>
+                    <p class="text-lg opacity-90">People Helped</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" id="impact-count-2">0</div>
+                    <p class="text-lg opacity-90">Volunteers</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" id="impact-count-3">0</div>
+                    <p class="text-lg opacity-90">Campaigns</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2">₹<span id="impact-count-4">0</span></div>
+                    <p class="text-lg opacity-90">Funds Raised</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">What People Say</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Hear from those who have experienced the impact of ConnectO.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "ConnectO helped me find volunteers for our community garden project. The response was
+                        overwhelming, and we've now created a beautiful space for everyone to enjoy."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Sarah Dhingra">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Sarah Dhingra</h4>
+                            <p class="text-gray-600 text-sm">Community Organizer</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "After losing everything in a flood, ConnectO connected us with donors who provided essential
+                        items for our family. We are and will forever be grateful for this platform."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Patel">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Michael Patel</h4>
+                            <p class="text-gray-600 text-sm">Disaster Survivor</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "As a volunteer, ConnectO has given me the opportunity to use my skills to help others. The
+                        platform provides a seamless way to explore and connect with causes that closely align with my
+                        beliefs."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/15.jpg" alt="Bharti Singh">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Bharti Singh</h4>
+                            <p class="text-gray-600 text-sm">Volunteer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                <div class="p-8 md:p-12 lg:flex lg:items-center lg:justify-between">
+                    <div class="lg:w-2/3">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Ready to Make a Difference?</h2>
+                        <p class="text-lg text-gray-600 mb-6 lg:mb-0">
+                            Join ConnectO today and be part of a community dedicated to creating positive change.
+                            Whether you need help or want to contribute, we're here for you.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/3 lg:text-right">
+                        <a href="{{url_for('login')}}"
+                            class="inline-block bg-primary hover:bg-secondary text-white px-6 py-3 rounded-md text-base font-medium transition duration-300">
+                            Join ConnectO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
+                    <p class="text-gray-400">
+                        Connecting hearts for social good. Our platform brings together those who need help and those
+                        who want to contribute.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{url_for('index')}}" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="{{url_for('campaigns')}}" class="text-gray-400 hover:text-white transition duration-300">Campaigns</a></li>
+                        <li><a href="{{url_for('resources')}}" class="text-gray-400 hover:text-white transition duration-300">Resources</a></li>
+                        <li><a href="{{url_for('about_us')}}" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: connecto@gmail.com</li>
+                        <li>Phone: +91 1234567891</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 ConnectO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Impact counter animation
+        function animateCounter(elementId, targetValue, prefix = '') {
+            const element = document.getElementById(elementId);
+            const duration = 2000; // Animation duration in milliseconds
+            const startTime = Date.now();
+            const startValue = 0;
+
+            function updateCounter() {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime;
+
+                if (elapsedTime < duration) {
+                    const value = Math.floor((elapsedTime / duration) * targetValue);
+                    element.textContent = prefix + value.toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = prefix + targetValue.toLocaleString();
+                }
+            }
+
+            updateCounter();
+        }
+
+        // Start counter animations when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter('impact-count-1', 5000);
+                    animateCounter('impact-count-2', 1200);
+                    animateCounter('impact-count-3', 150);
+                    animateCounter('impact-count-4', 2500000, '');
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('#impact-count-1').parentElement.parentElement);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns - ConnectO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="seek-help.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="contribute.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="campaigns.html" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="resources.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="about-us.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login / Register</a>
+                    {% endif %}
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="seek-help.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="contribute.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="campaigns.html" class="text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="resources.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="about-us.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == True %}
+                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login / Register</a>
+                {% else %}
+                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-light py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Active Campaigns</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Support ongoing campaigns and make a difference in the lives of those affected by recent events or ongoing challenges.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Categories -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">Urgent Campaigns</button>
+            </div>
+
+            <!-- Urgent Campaigns -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">All Campaigns</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Urgent Campaign 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1661868668264-35233e0e0dac?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fGZsb29kJTIwcmVsaWVmfGVufDB8fDB8fHww" alt="Flood Relief" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                Urgent
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Flood Relief Campaign</h3>
+                            <p class="text-gray-600 mb-4">
+                                Support families affected by recent floods. Urgent need for food, clean water, and shelter.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;45,000</span>
+                                    <span>Goal: &#8377;100,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>5 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Urgent Campaign 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative">
+                            <img src="https://media.istockphoto.com/id/1179610553/photo/black-stethoscope-on-blue-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=W4mfEuZZJ6tf01p8P09wA-RcEUDkjvC9nqzrbeMJ5bM=" alt="Medical Emergency" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                Urgent
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Medical Emergency Fund</h3>
+                            <p class="text-gray-600 mb-4">
+                                Help cover critical medical expenses for children and adults requiring immediate surgery.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;28,000</span>
+                                    <span>Goal: &#8377;50,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 56%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>3 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Urgent Campaign 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative">
+                            <img src="https://media.istockphoto.com/id/524903696/photo/poor-indian-children-asking-for-food-india.webp?a=1&b=1&s=612x612&w=0&k=20&c=DqMSvVaXQxISjdvfNizw6F9ZkaCBMy42Yk6agRcJUE8=" alt="Food Crisis" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                Urgent
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Food Crisis Response</h3>
+                            <p class="text-gray-600 mb-4">
+                                Provide emergency food supplies to communities facing severe food shortages.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;75,000</span>
+                                    <span>Goal: &#8377;150,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>7 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regular Campaigns -->
+            <div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Campaign 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Education Support" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Education for All</h3>
+                            <p class="text-gray-600 mb-4">
+                                Support underprivileged students with educational resources and scholarships.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;15,000</span>
+                                    <span>Goal: &#8377;50,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>20 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campaign 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Healthcare Initiative" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Healthcare for Elderly</h3>
+                            <p class="text-gray-600 mb-4">
+                                Provide medical care and support for senior citizens in need.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;35,000</span>
+                                    <span>Goal: &#8377;80,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 44%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>15 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campaign 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Community Development" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Community Center Build</h3>
+                            <p class="text-gray-600 mb-4">
+                                Help construct a community center for educational and social activities.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span>Raised: &#8377;120,000</span>
+                                    <span>Goal: &#8377;200,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>30 days left</span>
+                                </div>
+                                <a href="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                    Donate Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
+                    <p class="text-gray-400">
+                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: connecto@gmail.com</li>
+                        <li>Phone: +91 1234567891</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 ConnectO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Campaign category filter
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    if (!btn.classList.contains('hover:bg-secondary')) {
+                        btn.classList.add('bg-white', 'border', 'border-gray-300', 'hover:border-primary', 'text-gray-700', 'hover:text-primary');
+                    }
+                });
+                
+                // Add active class to clicked button
+                this.classList.remove('bg-white', 'border', 'border-gray-300', 'hover:border-primary', 'text-gray-700', 'hover:text-primary');
+                this.classList.add('bg-primary', 'text-white');
+            });
+        });
+
+        // Load more campaigns
+        document.getElementById('load-more').addEventListener('click', function() {
+            // Add your load more logic here
+            alert('Loading more campaigns...');
+        });
+    </script>
+</body>
+</html> 

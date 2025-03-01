@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute - ConnectO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="seek-help.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="contribute.html" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="campaigns.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="resources.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="about-us.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login / Register</a>
+                    {% endif %}
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="seek-help.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="contribute.html" class="text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="campaigns.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="resources.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="about-us.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == True %}
+                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login / Register</a>
+                {% else %}
+                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-light py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How Would You Like to Contribute?</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    There are many ways to make a difference. Choose how you'd like to contribute to our mission of creating positive change.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribution Options Section -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Option 1: Donate Financially -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fas fa-hand-holding-usd text-primary text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Donate Financially</h3>
+                        <p class="text-gray-600 mb-4">
+                            Support our mission with a one-time or recurring financial contribution. Every dollar makes a difference.
+                        </p>
+                        <a href="#donate-financially" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Donate Now
+                        </a>
+                    </div>
+                </div>
+                <!-- Option 2: Donate Goods -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fas fa-box-open text-primary text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Donate Goods</h3>
+                        <p class="text-gray-600 mb-4">
+                            Contribute clothing, blankets, toys, books, and other essential items to those in need.
+                        </p>
+                        <a href="#donate-goods" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Donate Goods
+                        </a>
+                    </div>
+                </div>
+                <!-- Option 3: Provide Services -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fas fa-hands-helping text-primary text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Provide Services</h3>
+                        <p class="text-gray-600 mb-4">
+                            Offer your professional skills and expertise to help individuals and communities in need.
+                        </p>
+                        <a href="#provide-services" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Offer Services
+                        </a>
+                    </div>
+                </div>
+                <!-- Option 4: Become a Volunteer -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 bg-primary/10 flex items-center justify-center">
+                        <i class="fas fa-user-friends text-primary text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Become a Volunteer</h3>
+                        <p class="text-gray-600 mb-4">
+                            Join our volunteer network and be contacted when your help is needed for various initiatives.
+                        </p>
+                        <a href="#become-volunteer" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
+                            Volunteer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Financially Section -->
+    <section id="donate-financially" class="py-12 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Donate Financially</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Your financial contribution helps us provide essential services and support to those in need.
+                </p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Choose Amount</h3>
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;100</button>
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;500</button>
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;1000</button>
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;2500</button>
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;5000</button>
+                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">Other</button>
+                            </div>
+                            <div class="mb-6 hidden" id="custom-amount-container">
+                                <label for="custom-amount" class="block text-gray-700 text-sm font-medium mb-2">Custom Amount (&#8377;)</label>
+                                <input type="number" id="custom-amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter amount">
+                            </div>
+                            <div class="mb-6">
+                                <label for="donation-frequency" class="block text-gray-700 text-sm font-medium mb-2">Donation Frequency</label>
+                                <select id="donation-frequency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="one-time">One-time</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="annually">Annually</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label for="donation-campaign" class="block text-gray-700 text-sm font-medium mb-2">Allocate to Campaign (Optional)</label>
+                                <select id="donation-campaign" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="general">General Fund</option>
+                                    <option value="education">Education for All</option>
+                                    <option value="disaster">Disaster Relief</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Payment Information</h3>
+                            <form id="payment-form">
+                                <div class="mb-4">
+                                    <label for="card-name" class="block text-gray-700 text-sm font-medium mb-2">Name on Card</label>
+                                    <input type="text" id="card-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="card-number" class="block text-gray-700 text-sm font-medium mb-2">Card Number</label>
+                                    <input type="text" id="card-number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="1234 5678 9012 3456" required>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label for="expiry-date" class="block text-gray-700 text-sm font-medium mb-2">Expiry Date</label>
+                                        <input type="text" id="expiry-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="MM/YY" required>
+                                    </div>
+                                    <div>
+                                        <label for="cvv" class="block text-gray-700 text-sm font-medium mb-2">CVV</label>
+                                        <input type="text" id="cvv" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="123" required>
+                                    </div>
+                                </div>
+                                <div class="mb-6">
+                                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email (for receipt)</label>
+                                    <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="your@email.com" required>
+                                </div>
+                                <div class="mb-6">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-primary">
+                                        <span class="ml-2 text-sm text-gray-600">Make this donation anonymous</span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium transition duration-300">
+                                    Complete Donation
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Goods Section -->
+    <section id="donate-goods" class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Donate Goods</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Your donations of clothing, blankets, toys, books, and other essential items can make a significant difference in someone's life.
+                </p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <form id="goods-donation-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Donor Information</h3>
+                                <div class="mb-4">
+                                    <label for="donor-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
+                                    <input type="text" id="donor-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="donor-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
+                                    <input type="email" id="donor-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="donor-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
+                                    <input type="tel" id="donor-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="donor-address" class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
+                                    <textarea id="donor-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Donation Details</h3>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Type of Items *</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="clothing">
+                                            <span class="ml-2 text-gray-600">Clothing</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="blankets">
+                                            <span class="ml-2 text-gray-600">Blankets</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="toys">
+                                            <span class="ml-2 text-gray-600">Toys</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="books">
+                                            <span class="ml-2 text-gray-600">Books</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="food">
+                                            <span class="ml-2 text-gray-600">Non-perishable Food</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="other">
+                                            <span class="ml-2 text-gray-600">Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="item-description" class="block text-gray-700 text-sm font-medium mb-2">Description of Items *</label>
+                                    <textarea id="item-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please provide details about the items you're donating (quantity, size, condition, etc.)" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="pickup-preference" class="block text-gray-700 text-sm font-medium mb-2">Pickup Preference *</label>
+                                    <select id="pickup-preference" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select an option</option>
+                                        <option value="drop-off">I'll drop off the items</option>
+                                        <option value="pickup">I need the items to be picked up</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="preferred-date" class="block text-gray-700 text-sm font-medium mb-2">Preferred Date *</label>
+                                    <input type="date" id="preferred-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="additional-notes" class="block text-gray-700 text-sm font-medium mb-2">Additional Notes</label>
+                                    <textarea id="additional-notes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Any additional information you'd like to share"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
+                                Submit Donation Information
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Provide Services Section -->
+    <section id="provide-services" class="py-12 bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Provide Services</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Share your expertise and professional skills to help individuals and communities in need.
+                </p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <form id="services-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h3>
+                                <div class="mb-4">
+                                    <label for="service-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
+                                    <input type="text" id="service-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
+                                    <input type="email" id="service-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
+                                    <input type="tel" id="service-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-location" class="block text-gray-700 text-sm font-medium mb-2">Location *</label>
+                                    <input type="text" id="service-location" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="City, State" required>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Service Details</h3>
+                                <div class="mb-4">
+                                    <label for="service-category" class="block text-gray-700 text-sm font-medium mb-2">Service Category *</label>
+                                    <select id="service-category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select a category</option>
+                                        <option value="healthcare">Healthcare</option>
+                                        <option value="education">Education & Tutoring</option>
+                                        <option value="legal">Legal Assistance</option>
+                                        <option value="counseling">Counseling & Mental Health</option>
+                                        <option value="financial">Financial Advice</option>
+                                        <option value="technology">Technology & IT Support</option>
+                                        <option value="trades">Trades & Repairs</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-description" class="block text-gray-700 text-sm font-medium mb-2">Description of Services *</label>
+                                    <textarea id="service-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please describe the services you can provide and your experience in this area" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-availability" class="block text-gray-700 text-sm font-medium mb-2">Availability *</label>
+                                    <select id="service-availability" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select availability</option>
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="evenings">Evenings</option>
+                                        <option value="flexible">Flexible</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-hours" class="block text-gray-700 text-sm font-medium mb-2">Hours per Week *</label>
+                                    <select id="service-hours" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select hours</option>
+                                        <option value="1-5">1-5 hours</option>
+                                        <option value="5-10">5-10 hours</option>
+                                        <option value="10-20">10-20 hours</option>
+                                        <option value="20+">20+ hours</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="service-credentials" class="block text-gray-700 text-sm font-medium mb-2">Professional Credentials (if applicable)</label>
+                                    <textarea id="service-credentials" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Licenses, certifications, degrees, etc."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
+                                Submit Service Information
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Become a Volunteer Section -->
+    <section id="become-volunteer" class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Become a Volunteer</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Join our network of volunteers and be contacted when your help is needed for various initiatives and events.
+                </p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <form id="volunteer-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h3>
+                                <div class="mb-4">
+                                    <label for="volunteer-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
+                                    <input type="text" id="volunteer-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
+                                    <input type="email" id="volunteer-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
+                                    <input type="tel" id="volunteer-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-address" class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
+                                    <textarea id="volunteer-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-age" class="block text-gray-700 text-sm font-medium mb-2">Age *</label>
+                                    <select id="volunteer-age" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select age group</option>
+                                        <option value="under-18">Under 18</option>
+                                        <option value="18-24">18-24</option>
+                                        <option value="25-34">25-34</option>
+                                        <option value="35-44">35-44</option>
+                                        <option value="45-54">45-54</option>
+                                        <option value="55-64">55-64</option>
+                                        <option value="65+">65+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Volunteer Preferences</h3>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Areas of Interest *</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="education">
+                                            <span class="ml-2 text-gray-600">Education</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="healthcare">
+                                            <span class="ml-2 text-gray-600">Healthcare</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="environment">
+                                            <span class="ml-2 text-gray-600">Environment</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="disaster-relief">
+                                            <span class="ml-2 text-gray-600">Disaster Relief</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="food-distribution">
+                                            <span class="ml-2 text-gray-600">Food Distribution</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="elderly-care">
+                                            <span class="ml-2 text-gray-600">Elderly Care</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="child-welfare">
+                                            <span class="ml-2 text-gray-600">Child Welfare</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="other">
+                                            <span class="ml-2 text-gray-600">Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-skills" class="block text-gray-700 text-sm font-medium mb-2">Skills & Expertise</label>
+                                    <textarea id="volunteer-skills" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please list any special skills, qualifications, or expertise you have"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-availability" class="block text-gray-700 text-sm font-medium mb-2">Availability *</label>
+                                    <select id="volunteer-availability" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select availability</option>
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="evenings">Evenings</option>
+                                        <option value="flexible">Flexible</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-frequency" class="block text-gray-700 text-sm font-medium mb-2">Preferred Frequency *</label>
+                                    <select id="volunteer-frequency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                        <option value="">Select frequency</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="bi-weekly">Bi-weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="as-needed">As needed</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="volunteer-motivation" class="block text-gray-700 text-sm font-medium mb-2">Why do you want to volunteer? *</label>
+                                    <textarea id="volunteer-motivation" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
+                                Submit Volunteer Application
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
+                    <p class="text-gray-400">
+                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: connecto@gmail.com</li>
+                        <li>Phone: +91 1234567891</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 ConnectO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
