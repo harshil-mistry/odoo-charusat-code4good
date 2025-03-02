@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Experts - ConnectO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{{url_for('index')}}" class="text-primary font-bold text-2xl">ConnectO</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{url_for('index')}}" class="text-gray-600 hover:text-primary">Home</a>
+                    <a href="{{url_for('seekhelp')}}" class="text-gray-600 hover:text-primary">Seek Help</a>
+                    <a href="{{url_for('contribute')}}" class="text-gray-600 hover:text-primary">Contribute</a>
+                    <a href="{{url_for('campaigns')}}" class="text-gray-600 hover:text-primary">Campaigns</a>
+                    <a href="{{url_for('resources')}}" class="text-gray-600 hover:text-primary">Resources</a>
+                    <a href="{{url_for('about_us')}}" class="text-gray-600 hover:text-primary">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login
+                        / Register</a>
+                    {% endif %}
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-primary" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden" id="mobileMenu">
+        <div class="bg-white shadow-md">
+            <div class="space-y-1 px-4 py-4">
+                <a href="{{url_for('index')}}" class="block text-gray-600 hover:text-primary py-2">Home</a>
+                <a href="{{url_for('seekhelp')}}" class="block text-gray-600 hover:text-primary py-2">Seek Help</a>
+                <a href="{{url_for('contribute')}}" class="block text-gray-600 hover:text-primary py-2">Contribute</a>
+                <a href="{{url_for('campaigns')}}" class="block text-gray-600 hover:text-primary py-2">Campaigns</a>
+                <a href="{{url_for('resources')}}" class="block text-gray-600 hover:text-primary py-2">Resources</a>
+                <a href="{{url_for('about_us')}}" class="block text-gray-600 hover:text-primary py-2">About Us</a>
+                {% if session['logged_in'] == False %}
+                <a href="{{url_for('login')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login
+                    / Register</a>
+                {% else %}
+                <a href="{{url_for('logout')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-light py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Our Expert Network</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Connect with our network of experienced professionals who are dedicated to helping those in need. Our experts bring years of experience and deep knowledge in their respective fields.
+                </p>
+            </div>
+        </div>
+    </div>
+
+        <!-- Experts Grid -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Expert 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. John Smith" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Dr. John Smith</h3>
+                            <p class="text-primary">Healthcare Specialist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        20+ years of experience in general medicine and public health. Specializes in community healthcare programs and preventive medicine.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep1')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Dr. Naina Talwar" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Dr. Naina Talwar</h3>
+                            <p class="text-primary">Mental Health Counselor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Clinical psychologist with expertise in trauma counseling and cognitive behavioral therapy. Passionate about making mental healthcare accessible.
+                    </p>
+                    <div class="p-6 mt-auto">
+                        <a href=""{{url_for('expert_profile', id='ep2')}}"" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Adv. Michael Shukla" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Adv. Michael Shukla</h3>
+                            <p class="text-primary">Legal Aid Expert</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Human rights lawyer specializing in social justice and public interest litigation. Experienced in providing pro bono legal services.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href=""{{url_for('expert_profile', id='ep3')}}"" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 4 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Prof. Krisha Kapoor" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Prof. Krisha Kapoor</h3>
+                            <p class="text-primary">Education Specialist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Education policy expert with focus on inclusive education and special needs. Advocates for equal educational opportunities.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep4')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 5 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/56.jpg" alt="Keshav Patel" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Keshav Patel</h3>
+                            <p class="text-primary">Financial Advisor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Certified financial planner specializing in debt management and financial literacy for underserved communities.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep5')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 6 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/39.jpg" alt="Tarini Patel" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Tarini Patel</h3>
+                            <p class="text-primary">Social Worker</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Licensed clinical social worker with expertise in family services and child welfare. Dedicated to strengthening communities.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep6')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 7 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Dr. David Kim" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Dr. David Kim</h3>
+                            <p class="text-primary">Rehabilitation Specialist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Physical rehabilitation expert focusing on accessibility and mobility solutions for differently-abled individuals.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep7')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 8 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/82.jpg" alt="Dr. Lisa Thompson" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Dr. Lisa Thompson</h3>
+                            <p class="text-primary">Nutritionist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Clinical nutritionist specializing in community nutrition programs and sustainable food solutions for underprivileged areas.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep8')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 9 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/39.jpg" alt="Chatur Sharma" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Chatur Sharma</h3>
+                            <p class="text-primary">Career Counselor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Career development specialist with focus on job training and employment opportunities for disadvantaged communities.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep9')}}" target="_blank" class="w-full">
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expert 10 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col justify-between">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/57.jpg" alt="Dr. Tanya Shrivastav" class="w-16 h-16 rounded-full">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Dr. Tanya Srivastav</h3>
+                            <p class="text-primary">Child Development Specialist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Pediatric development expert specializing in early intervention programs and special needs education support.
+                    </p>
+                    
+                    <div class="p-6 mt-auto">
+                        <a href="{{url_for('expert_profile', id='ep10')}}" target="_blank" class="w-full">
+                        <button  class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">
+                            Schedule Consultation
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
+                    <p class="text-gray-400">
+                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: connecto@gmail.com</li>
+                        <li>Phone: +91 1234567891</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 ConnectO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html> 

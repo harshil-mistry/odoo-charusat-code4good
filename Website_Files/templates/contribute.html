@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +22,13 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
+
 <body class="bg-white">
     <!-- Navigation -->
     <nav class="bg-white shadow-md">
@@ -33,26 +36,37 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="index.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                        <a href="{{url_for('index')}}" class="text-primary font-bold text-2xl">ConnectO</a>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="seek-help.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
-                    <a href="contribute.html" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Contribute</a>
-                    <a href="campaigns.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
-                    <a href="resources.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
-                    <a href="about-us.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    <a href="{{url_for('index')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{url_for('seekhelp')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="{{url_for('contribute')}}"
+                        class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="{{url_for('campaigns')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="{{url_for('resources')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="{{url_for('about_us')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
                     {% if session['logged_in'] == True %}
-                    <a href="{{url_for('logout')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    <a href="{{url_for('logout')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
                     {% else %}
-                    <a href="{{url_for('login')}}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login / Register</a>
+                    <a href="{{url_for('login')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login
+                        / Register</a>
                     {% endif %}
                 </div>
                 <div class="flex md:hidden items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                 </div>
@@ -61,16 +75,25 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
-                <a href="seek-help.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
-                <a href="contribute.html" class="text-primary block px-3 py-2 text-base font-medium">Contribute</a>
-                <a href="campaigns.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
-                <a href="resources.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
-                <a href="about-us.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
-                {% if session['logged_in'] == True %}
-                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login / Register</a>
+                <a href="{{url_for('index')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="{{url_for('seekhelp')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="{{url_for('contribute')}}"
+                    class="text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="{{url_for('campaigns')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="{{url_for('resources')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="{{url_for('about_us')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == False %}
+                <a href="{{url_for('login')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login
+                    / Register</a>
                 {% else %}
-                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                <a href="{{url_for('logout')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
                 {% endif %}
             </div>
         </div>
@@ -82,7 +105,8 @@
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How Would You Like to Contribute?</h1>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    There are many ways to make a difference. Choose how you'd like to contribute to our mission of creating positive change.
+                    There are many ways to make a difference. Choose how you'd like to contribute to our mission of
+                    creating positive change.
                 </p>
             </div>
         </div>
@@ -100,10 +124,15 @@
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Donate Financially</h3>
                         <p class="text-gray-600 mb-4">
-                            Support our mission with a one-time or recurring financial contribution. Every dollar makes a difference.
+                            Support our mission with a one-time or recurring financial contribution. Every dollar makes
+                            a difference.
                         </p>
-                        <a href="#donate-financially" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
-                            Donate Now
+                        <a href="{{url_for('donate')}}"
+                            class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                            <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <i class="fas fa-heart mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                            <span class="relative">Donate Now</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                         </a>
                     </div>
                 </div>
@@ -117,8 +146,12 @@
                         <p class="text-gray-600 mb-4">
                             Contribute clothing, blankets, toys, books, and other essential items to those in need.
                         </p>
-                        <a href="#donate-goods" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
-                            Donate Goods
+                        <a href="#donate-goods"
+                            class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                            <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <i class="fas fa-box-open mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                            <span class="relative">Donate Goods</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                         </a>
                     </div>
                 </div>
@@ -132,8 +165,12 @@
                         <p class="text-gray-600 mb-4">
                             Offer your professional skills and expertise to help individuals and communities in need.
                         </p>
-                        <a href="#provide-services" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
-                            Offer Services
+                        <a href="#provide-services"
+                            class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                            <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <i class="fas fa-hands-helping mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                            <span class="relative">Offer Services</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                         </a>
                     </div>
                 </div>
@@ -145,97 +182,16 @@
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Become a Volunteer</h3>
                         <p class="text-gray-600 mb-4">
-                            Join our volunteer network and be contacted when your help is needed for various initiatives.
+                            Join our volunteer network and be contacted when your help is needed for various
+                            initiatives.
                         </p>
-                        <a href="#become-volunteer" class="block bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md font-medium transition duration-300">
-                            Volunteer
+                        <a href="#become-volunteer"
+                            class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                            <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <i class="fas fa-user-friends mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                            <span class="relative">Volunteer Now</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Donate Financially Section -->
-    <section id="donate-financially" class="py-12 bg-light">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Donate Financially</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Your financial contribution helps us provide essential services and support to those in need.
-                </p>
-            </div>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="p-6 md:p-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Choose Amount</h3>
-                            <div class="grid grid-cols-3 gap-4 mb-6">
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;100</button>
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;500</button>
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;1000</button>
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;2500</button>
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">&#8377;5000</button>
-                                <button class="donation-amount-btn py-2 px-4 border-2 border-gray-300 rounded-md font-medium hover:border-primary hover:text-primary transition duration-300">Other</button>
-                            </div>
-                            <div class="mb-6 hidden" id="custom-amount-container">
-                                <label for="custom-amount" class="block text-gray-700 text-sm font-medium mb-2">Custom Amount (&#8377;)</label>
-                                <input type="number" id="custom-amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter amount">
-                            </div>
-                            <div class="mb-6">
-                                <label for="donation-frequency" class="block text-gray-700 text-sm font-medium mb-2">Donation Frequency</label>
-                                <select id="donation-frequency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                                    <option value="one-time">One-time</option>
-                                    <option value="monthly">Monthly</option>
-                                    <option value="quarterly">Quarterly</option>
-                                    <option value="annually">Annually</option>
-                                </select>
-                            </div>
-                            <div class="mb-6">
-                                <label for="donation-campaign" class="block text-gray-700 text-sm font-medium mb-2">Allocate to Campaign (Optional)</label>
-                                <select id="donation-campaign" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                                    <option value="general">General Fund</option>
-                                    <option value="education">Education for All</option>
-                                    <option value="disaster">Disaster Relief</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Payment Information</h3>
-                            <form id="payment-form">
-                                <div class="mb-4">
-                                    <label for="card-name" class="block text-gray-700 text-sm font-medium mb-2">Name on Card</label>
-                                    <input type="text" id="card-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="card-number" class="block text-gray-700 text-sm font-medium mb-2">Card Number</label>
-                                    <input type="text" id="card-number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="1234 5678 9012 3456" required>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div>
-                                        <label for="expiry-date" class="block text-gray-700 text-sm font-medium mb-2">Expiry Date</label>
-                                        <input type="text" id="expiry-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="MM/YY" required>
-                                    </div>
-                                    <div>
-                                        <label for="cvv" class="block text-gray-700 text-sm font-medium mb-2">CVV</label>
-                                        <input type="text" id="cvv" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="123" required>
-                                    </div>
-                                </div>
-                                <div class="mb-6">
-                                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email (for receipt)</label>
-                                    <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="your@email.com" required>
-                                </div>
-                                <div class="mb-6">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-primary">
-                                        <span class="ml-2 text-sm text-gray-600">Make this donation anonymous</span>
-                                    </label>
-                                </div>
-                                <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-2 px-4 rounded-md font-medium transition duration-300">
-                                    Complete Donation
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -248,30 +204,43 @@
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Donate Goods</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Your donations of clothing, blankets, toys, books, and other essential items can make a significant difference in someone's life.
+                    Your donations of clothing, blankets, toys, books, and other essential items can make a significant
+                    difference in someone's life.
                 </p>
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-6 md:p-8">
-                    <form id="goods-donation-form">
+                    <form id="goods-donation-form" method="post">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Donor Information</h3>
                                 <div class="mb-4">
-                                    <label for="donor-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
-                                    <input type="text" id="donor-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="donor-name" class="block text-gray-700 text-sm font-medium mb-2">Full
+                                        Name *</label>
+                                    <input type="text" id="donor-name" name="donor_name"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="donor-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
-                                    <input type="email" id="donor-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="donor-email" class="block text-gray-700 text-sm font-medium mb-2">Email
+                                        Address *</label>
+                                    <input type="email" id="donor-email" name="donor_email"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="donor-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
-                                    <input type="tel" id="donor-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="donor-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone
+                                        Number *</label>
+                                    <input type="tel" id="donor-phone" name="donor_phone"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="donor-address" class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
-                                    <textarea id="donor-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                    <label for="donor-address"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
+                                    <textarea id="donor-address" name="donor_address" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required></textarea>
                                 </div>
                             </div>
                             <div>
@@ -280,56 +249,74 @@
                                     <label class="block text-gray-700 text-sm font-medium mb-2">Type of Items *</label>
                                     <div class="grid grid-cols-2 gap-2">
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="clothing">
+                                            <input type="checkbox" name="item_types[]" value="clothing" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Clothing</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="blankets">
+                                            <input type="checkbox" name="item_types[]" value="blankets" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Blankets</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="toys">
+                                            <input type="checkbox" name="item_types[]" value="toys" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Toys</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="books">
+                                            <input type="checkbox" name="item_types[]" value="books" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Books</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="food">
+                                            <input type="checkbox" name="item_types[]" value="food" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Non-perishable Food</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="item-type" value="other">
+                                            <input type="checkbox" name="item_types[]" value="other" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Other</span>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="item-description" class="block text-gray-700 text-sm font-medium mb-2">Description of Items *</label>
-                                    <textarea id="item-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please provide details about the items you're donating (quantity, size, condition, etc.)" required></textarea>
+                                    <label for="item-description"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Description of Items
+                                        *</label>
+                                    <textarea id="item-description" name="item_description" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        placeholder="Please provide details about the items you're donating (quantity, size, condition, etc.)"
+                                        required></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="pickup-preference" class="block text-gray-700 text-sm font-medium mb-2">Pickup Preference *</label>
-                                    <select id="pickup-preference" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="pickup-preference"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Pickup Preference *</label>
+                                    <select id="pickup-preference" name="pickup_preference"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                         <option value="">Select an option</option>
                                         <option value="drop-off">I'll drop off the items</option>
                                         <option value="pickup">I need the items to be picked up</option>
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="preferred-date" class="block text-gray-700 text-sm font-medium mb-2">Preferred Date *</label>
-                                    <input type="date" id="preferred-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="preferred-date"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Preferred Date *</label>
+                                    <input type="date" id="preferred-date" name="preferred_date"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="additional-notes" class="block text-gray-700 text-sm font-medium mb-2">Additional Notes</label>
-                                    <textarea id="additional-notes" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Any additional information you'd like to share"></textarea>
+                                    <label for="additional-notes"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Additional Notes</label>
+                                    <textarea id="additional-notes" name="additional_notes" rows="2"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        placeholder="Any additional information you'd like to share"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-6">
-                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
-                                Submit Donation Information
+                            <button type="submit" name="action" value="goods"
+                                class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                                <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <i class="fas fa-box-open mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                                <span class="relative">Submit Donation Information</span>
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                             </button>
                         </div>
                     </form>
@@ -349,32 +336,47 @@
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-6 md:p-8">
-                    <form id="services-form">
+                    <form id="services-form" method="post">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h3>
                                 <div class="mb-4">
-                                    <label for="service-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
-                                    <input type="text" id="service-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="service-name" class="block text-gray-700 text-sm font-medium mb-2">Full
+                                        Name *</label>
+                                    <input type="text" id="service-name" name="name"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="service-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
-                                    <input type="email" id="service-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="service-email"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
+                                    <input type="email" id="service-email" name="email"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="service-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
-                                    <input type="tel" id="service-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="service-phone"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
+                                    <input type="tel" id="service-phone" name="contact"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="service-location" class="block text-gray-700 text-sm font-medium mb-2">Location *</label>
-                                    <input type="text" id="service-location" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="City, State" required>
+                                    <label for="service-location"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Location *</label>
+                                    <input type="text" id="service-location" name="location"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        placeholder="City, State" required>
                                 </div>
                             </div>
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Service Details</h3>
                                 <div class="mb-4">
-                                    <label for="service-category" class="block text-gray-700 text-sm font-medium mb-2">Service Category *</label>
-                                    <select id="service-category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="service-category"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Service Category *</label>
+                                    <select id="service-category" name="category"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                         <option value="">Select a category</option>
                                         <option value="healthcare">Healthcare</option>
                                         <option value="education">Education & Tutoring</option>
@@ -387,37 +389,45 @@
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="service-description" class="block text-gray-700 text-sm font-medium mb-2">Description of Services *</label>
-                                    <textarea id="service-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please describe the services you can provide and your experience in this area" required></textarea>
+                                    <label for="service-description"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Description of Services
+                                        *</label>
+                                    <textarea id="service-description" rows="3" name="description"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        placeholder="Please describe the services you can provide and your experience in this area"
+                                        required></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="service-availability" class="block text-gray-700 text-sm font-medium mb-2">Availability *</label>
-                                    <select id="service-availability" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-                                        <option value="">Select availability</option>
-                                        <option value="weekdays">Weekdays</option>
-                                        <option value="weekends">Weekends</option>
-                                        <option value="evenings">Evenings</option>
-                                        <option value="flexible">Flexible</option>
-                                    </select>
+                                    <label for="expertise-keywords"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Expertise Keywords
+                                        *</label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        <input type="text" id="keyword-1" name="keyword-1"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                            placeholder="Keyword 1" required>
+                                        <input type="text" id="keyword-2" name="keyword-2"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                            placeholder="Keyword 2" required>
+                                        <input type="text" id="keyword-3" name="keyword-3"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                            placeholder="Keyword 3" required>
+                                        <input type="text" id="keyword-4" name="keyword-4"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                            placeholder="Keyword 4" required>
+                                        <input type="text" id="keyword-5" name="keyword-5"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                            placeholder="Keyword 5" required>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Enter 5 keywords which best describe your expertise</p>
+                                    <p class="text-xs text-gray-500 mt-1">E.g. For a Django Developer : Developer, Web Developer, Backend Developer, Python, Django</p>
                                 </div>
-                                <div class="mb-4">
-                                    <label for="service-hours" class="block text-gray-700 text-sm font-medium mb-2">Hours per Week *</label>
-                                    <select id="service-hours" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-                                        <option value="">Select hours</option>
-                                        <option value="1-5">1-5 hours</option>
-                                        <option value="5-10">5-10 hours</option>
-                                        <option value="10-20">10-20 hours</option>
-                                        <option value="20+">20+ hours</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="service-credentials" class="block text-gray-700 text-sm font-medium mb-2">Professional Credentials (if applicable)</label>
-                                    <textarea id="service-credentials" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Licenses, certifications, degrees, etc."></textarea>
-                                </div>
+
+
                             </div>
                         </div>
                         <div class="mt-6">
-                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
+                            <button type="submit" name="action" value="services"
+                                class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
                                 Submit Service Information
                             </button>
                         </div>
@@ -433,34 +443,50 @@
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Become a Volunteer</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Join our network of volunteers and be contacted when your help is needed for various initiatives and events.
+                    Join our network of volunteers and be contacted when your help is needed for various initiatives and
+                    events.
                 </p>
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-6 md:p-8">
-                    <form id="volunteer-form">
+                    <form id="volunteer-form" method="post">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h3>
                                 <div class="mb-4">
-                                    <label for="volunteer-name" class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
-                                    <input type="text" id="volunteer-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-name"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
+                                    <input type="text" id="volunteer-name" name="volunteer_name"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-email" class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
-                                    <input type="email" id="volunteer-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-email"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Email Address *</label>
+                                    <input type="email" id="volunteer-email" name="volunteer_email"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-phone" class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
-                                    <input type="tel" id="volunteer-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-phone"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Phone Number *</label>
+                                    <input type="tel" id="volunteer-phone" name="volunteer_phone"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-address" class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
-                                    <textarea id="volunteer-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                    <label for="volunteer-address"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Address *</label>
+                                    <textarea id="volunteer-address" name="volunteer_address" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-age" class="block text-gray-700 text-sm font-medium mb-2">Age *</label>
-                                    <select id="volunteer-age" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-age" class="block text-gray-700 text-sm font-medium mb-2">Age
+                                        *</label>
+                                    <select id="volunteer-age" name="volunteer_age"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                         <option value="">Select age group</option>
                                         <option value="under-18">Under 18</option>
                                         <option value="18-24">18-24</option>
@@ -475,49 +501,56 @@
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Volunteer Preferences</h3>
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Areas of Interest *</label>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Areas of Interest
+                                        *</label>
                                     <div class="grid grid-cols-2 gap-2">
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="education">
+                                            <input type="checkbox" name="interest_areas[]" value="education" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Education</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="healthcare">
+                                            <input type="checkbox" name="interest_areas[]" value="healthcare" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Healthcare</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="environment">
+                                            <input type="checkbox" name="interest_areas[]" value="environment" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Environment</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="disaster-relief">
+                                            <input type="checkbox" name="interest_areas[]" value="disaster-relief" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Disaster Relief</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="food-distribution">
+                                            <input type="checkbox" name="interest_areas[]" value="food-distribution" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Food Distribution</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="elderly-care">
+                                            <input type="checkbox" name="interest_areas[]" value="elderly-care" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Elderly Care</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="child-welfare">
+                                            <input type="checkbox" name="interest_areas[]" value="child-welfare" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Child Welfare</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="checkbox" class="form-checkbox h-5 w-5 text-primary" name="interest" value="other">
+                                            <input type="checkbox" name="interest_areas[]" value="other" class="form-checkbox h-5 w-5 text-primary">
                                             <span class="ml-2 text-gray-600">Other</span>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-skills" class="block text-gray-700 text-sm font-medium mb-2">Skills & Expertise</label>
-                                    <textarea id="volunteer-skills" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Please list any special skills, qualifications, or expertise you have"></textarea>
+                                    <label for="volunteer-skills"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Skills & Expertise</label>
+                                    <textarea id="volunteer-skills" name="volunteer_skills" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        placeholder="Please list any special skills, qualifications, or expertise you have"></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-availability" class="block text-gray-700 text-sm font-medium mb-2">Availability *</label>
-                                    <select id="volunteer-availability" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-availability"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Availability *</label>
+                                    <select id="volunteer-availability" name="volunteer_availability"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                         <option value="">Select availability</option>
                                         <option value="weekdays">Weekdays</option>
                                         <option value="weekends">Weekends</option>
@@ -526,8 +559,12 @@
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-frequency" class="block text-gray-700 text-sm font-medium mb-2">Preferred Frequency *</label>
-                                    <select id="volunteer-frequency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <label for="volunteer-frequency"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Preferred Frequency
+                                        *</label>
+                                    <select id="volunteer-frequency" name="volunteer_frequency"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required>
                                         <option value="">Select frequency</option>
                                         <option value="weekly">Weekly</option>
                                         <option value="bi-weekly">Bi-weekly</option>
@@ -537,14 +574,22 @@
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="volunteer-motivation" class="block text-gray-700 text-sm font-medium mb-2">Why do you want to volunteer? *</label>
-                                    <textarea id="volunteer-motivation" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                                    <label for="volunteer-motivation"
+                                        class="block text-gray-700 text-sm font-medium mb-2">Why do you want to
+                                        volunteer? *</label>
+                                    <textarea id="volunteer-motivation" name="volunteer_motivation" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        required></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-6">
-                            <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md font-medium transition duration-300">
-                                Submit Volunteer Application
+                            <button type="submit" name="action" value="volunteer"
+                                class="group relative inline-flex w-full justify-center items-center bg-primary hover:bg-secondary text-white text-center px-6 py-3 rounded-md font-medium transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
+                                <span class="absolute inset-0 bg-white/20 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <i class="fas fa-user-friends mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                                <span class="relative">Submit Volunteer Application</span>
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
                             </button>
                         </div>
                     </form>
@@ -560,7 +605,8 @@
                 <div>
                     <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
                     <p class="text-gray-400">
-                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                        Connecting hearts for social good. Our platform brings together those who need help and those
+                        who want to contribute.
                     </p>
                 </div>
                 <div>
@@ -569,7 +615,8 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
                     </ul>
                 </div>
                 <div>
@@ -602,3 +649,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- Add this at the top of the body tag, right after it opens -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div id="flash-message" class="fixed top-4 right-4 z-50 flex items-center p-4 mb-4 rounded-lg {% if category == 'success' %}bg-green-500{% else %}bg-red-500{% endif %} text-white">
+                    <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} mr-2"></i>
+                    <span>{{ message }}</span>
+                </div>
+                <script>
+                    setTimeout(() => {
+                        const flashMessage = document.getElementById('flash-message');
+                        if (flashMessage) {
+                            flashMessage.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                            setTimeout(() => flashMessage.remove(), 500);
+                        }
+                    }, 5000);
+                </script>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

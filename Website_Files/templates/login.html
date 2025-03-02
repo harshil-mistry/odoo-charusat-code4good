@@ -44,20 +44,20 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="index.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                        <a href="{{url_for('index')}}" class="text-primary font-bold text-2xl">ConnectO</a>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="seek-help.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek
+                    <a href="{{url_for('index')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{url_for('seekhelp')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek
                         Help</a>
-                    <a href="contribute.html"
+                    <a href="{{url_for('contribute')}}"
                         class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
-                    <a href="campaigns.html"
+                    <a href="{{url_for('campaigns')}}"
                         class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
-                    <a href="resources.html"
+                    <a href="{{url_for('resources')}}"
                         class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Resources</a>
-                    <a href="about-us.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About
+                    <a href="{{url_for('about_us')}}" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About
                         Us</a>
                     {% if session['logged_in'] == True %}
                     <a href="{{url_for('logout')}}"
@@ -82,24 +82,24 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html"
+                <a href="{{url_for('index')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
-                <a href="seek-help.html"
+                <a href="{{url_for('seekhelp')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
-                <a href="contribute.html"
+                <a href="{{url_for('contribute')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
-                <a href="campaigns.html"
+                <a href="{{url_for('campaigns')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
-                <a href="resources.html"
+                <a href="{{url_for('resources')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Resources</a>
-                <a href="about-us.html"
+                <a href="{{url_for('about_us')}}"
                     class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
-                {% if session['logged_in'] == True %}
-                <a href="login.html"
+                {% if session['logged_in'] == False %}
+                <a href="{{url_for('login')}}"
                     class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login
                     / Register</a>
                 {% else %}
-                <a href="login.html"
+                <a href="{{url_for('logout')}}"
                     class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
                 {% endif %}
             </div>

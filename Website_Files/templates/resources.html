@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +22,13 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
+
 <body class="bg-white">
     <!-- Navigation -->
     <nav class="bg-white shadow-md">
@@ -33,22 +36,37 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="index.html" class="text-primary font-bold text-2xl">ConnectO</a>
+                        <a href="{{url_for('index')}}" class="text-primary font-bold text-2xl">ConnectO</a>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="seek-help.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
-                    <a href="contribute.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
-                    <a href="campaigns.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
-                    <a href="resources.html" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Resources</a>
-                    <a href="about-us.html" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
-                    <a href="login.html" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login / Register</a>
+                    <a href="{{url_for('index')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="{{url_for('seekhelp')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Seek Help</a>
+                    <a href="{{url_for('contribute')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contribute</a>
+                    <a href="{{url_for('campaigns')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Campaigns</a>
+                    <a href="{{url_for('resources')}}"
+                        class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Resources</a>
+                    <a href="{{url_for('about_us')}}"
+                        class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">About Us</a>
+                    {% if session['logged_in'] == True %}
+                    <a href="{{url_for('logout')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Logout</a>
+                    {% else %}
+                    <a href="{{url_for('login')}}"
+                        class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login
+                        / Register</a>
+                    {% endif %}
                 </div>
                 <div class="flex md:hidden items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                 </div>
@@ -57,13 +75,26 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
-                <a href="seek-help.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
-                <a href="contribute.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
-                <a href="campaigns.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
-                <a href="resources.html" class="text-primary block px-3 py-2 text-base font-medium">Resources</a>
-                <a href="about-us.html" class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
-                <a href="login.html" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login / Register</a>
+                <a href="{{url_for('index')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Home</a>
+                <a href="{{url_for('seekhelp')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Seek Help</a>
+                <a href="{{url_for('contribute')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Contribute</a>
+                <a href="{{url_for('campaigns')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">Campaigns</a>
+                <a href="{{url_for('resources')}}"
+                    class="text-primary block px-3 py-2 text-base font-medium">Resources</a>
+                <a href="{{url_for('about_us')}}"
+                    class="text-gray-700 hover:text-primary block px-3 py-2 text-base font-medium">About Us</a>
+                {% if session['logged_in'] == True %}
+                <a href="{{url_for('login')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Login
+                    / Register</a>
+                {% else %}
+                <a href="{{url_for('logout')}}"
+                    class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-4 transition duration-300">Logout</a>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -74,22 +105,9 @@
             <div class="text-center">
                 <h1 class="text-4xl font-bold text-gray-800 mb-4">Government Schemes & Resources</h1>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Access information about various government schemes, facilities, and support programs available for different sections of society.
+                    Access information about various government schemes, facilities, and support programs available for
+                    different sections of society.
                 </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Search Section -->
-    <section class="py-8 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-xl mx-auto">
-                <div class="relative">
-                    <input type="text" id="search-resources" placeholder="Search schemes, programs, or facilities..." class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                    <div class="absolute left-4 top-3.5 text-gray-400">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -106,25 +124,29 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Education Schemes</h3>
                     <ul class="space-y-3">
                         <li>
-                            <a href="http://www.education.gov.in/scholarships-education-loan-0" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="http://www.education.gov.in/scholarships-education-loan-0" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Scholarship Programs</span>
                             </a>
                         </li>
                         <li>
-                            <a href="http://www.education.gov.in/scholarships-education-loan-4" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="http://www.education.gov.in/scholarships-education-loan-4" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Student Loans</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.aicte-india.org/reports/overview/Sarva-Shiksha-Abhiyan" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://www.aicte-india.org/reports/overview/Sarva-Shiksha-Abhiyan" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Free Education Initiatives</span>
                             </a>
                         </li>
                         <li>
-                            <a href="http://www.msde.gov.in/" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="http://www.msde.gov.in/" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Skill Development Programs</span>
                             </a>
@@ -140,25 +162,31 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Healthcare Programs</h3>
                     <ul class="space-y-3">
                         <li>
-                            <a href="https://nha.gov.in/PM-JAY" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://nha.gov.in/PM-JAY" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Health Insurance Schemes</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://mohfw.gov.in/major-programmes/poor-patients-financial-support" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://mohfw.gov.in/major-programmes/poor-patients-financial-support"
+                                target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Medical Assistance Programs</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://telemanas.mohfw.gov.in/home" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://telemanas.mohfw.gov.in/home" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Mental Health Support</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://nhm.gov.in/New_Updates_2018/NHM_Components/Immunization/report/National_%20Immunization_Schedule.pdf" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://nhm.gov.in/New_Updates_2018/NHM_Components/Immunization/report/National_%20Immunization_Schedule.pdf"
+                                target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Vaccination Programs</span>
                             </a>
@@ -174,33 +202,37 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Employment Support</h3>
                     <ul class="space-y-3">
                         <li>
-                            <a href="https://www.msde.gov.in/" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://www.msde.gov.in/" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Job Training Programs</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.india.gov.in/people-groups/community/self-employed" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://www.india.gov.in/people-groups/community/self-employed" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Self-Employment Schemes</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://dge.gov.in/dge/" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://dge.gov.in/dge/" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Unemployment Benefits</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.ncs.gov.in/" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://www.ncs.gov.in/" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Career Counseling</span>
                             </a>
                         </li>
                     </ul>
                 </div>
-            
-                
+
+
 
                 <!-- Agriculture Category -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
@@ -210,36 +242,48 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Crisis Support</h3>
                     <ul class="space-y-3">
                         <li class="relative inline-block">
-                            <a href="#" class="flex items-center text-gray-600 hover:text-primary" id="dropdown-trigger">
+                            <a href="#" class="flex items-center text-gray-600 hover:text-primary"
+                                id="dropdown-trigger">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span class="hover:underline">Security Measures</span>
-                                
-                            </a>
-                            <ul id="dropdown-menu" class="hidden absolute top-0 left-full w-48 bg-white border border-gray-200 shadow-lg z-10">
 
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Cyclone" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Cyclone</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Tsunami" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Tsunami</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Heat-Wave" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Heat Wave</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Landslide" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Landslide</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Urban-Floods" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Urban Floods</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Floods" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Floods</a></li>
-                                <li><a href="https://ndma.gov.in/Natural-Hazards/Earthquakes" target="_blank" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Earthquakes</a></li>
+                            </a>
+                            <ul id="dropdown-menu"
+                                class="hidden absolute top-0 left-full w-48 bg-white border border-gray-200 shadow-lg z-10">
+
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Cyclone" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Cyclone</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Tsunami" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Tsunami</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Heat-Wave" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Heat Wave</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Landslide" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Landslide</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Urban-Floods" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Urban Floods</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Floods" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Floods</a></li>
+                                <li><a href="https://ndma.gov.in/Natural-Hazards/Earthquakes" target="_blank"
+                                        class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Earthquakes</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="https://aapdamitra.ndma.gov.in/" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://aapdamitra.ndma.gov.in/" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Aapda Mitra Scheme</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://dfpd.gov.in/pradhan-mantri-garib-kalyan-anna-yojana/en" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://dfpd.gov.in/pradhan-mantri-garib-kalyan-anna-yojana/en" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>Pradhan Mantri Garib Kalyan Anna Yojana (PMGKAY)</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://ndmindia.mha.gov.in/ndmi/responsefund" target="_blank" class="flex items-center text-gray-600 hover:text-primary hover:underline">
+                            <a href="https://ndmindia.mha.gov.in/ndmi/responsefund" target="_blank"
+                                class="flex items-center text-gray-600 hover:text-primary hover:underline">
                                 <i class="fas fa-chevron-right mr-2 text-sm"></i>
                                 <span>National Disaster Risk Management Fund (NDRMF)</span>
                             </a>
@@ -257,7 +301,8 @@
                 <div>
                     <h3 class="text-xl font-semibold mb-4">ConnectO</h3>
                     <p class="text-gray-400">
-                        Connecting hearts for social good. Our platform brings together those who need help and those who want to contribute.
+                        Connecting hearts for social good. Our platform brings together those who need help and those
+                        who want to contribute.
                     </p>
                 </div>
                 <div>
@@ -266,7 +311,8 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
                     </ul>
                 </div>
                 <div>
@@ -302,35 +348,36 @@
 
     <script>
         // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-        var trigger = document.getElementById("dropdown-trigger");
-        var menu = document.getElementById("dropdown-menu");
-        var crisisSupportDiv = trigger.closest(".bg-white"); // Find the crisis support div
+            var trigger = document.getElementById("dropdown-trigger");
+            var menu = document.getElementById("dropdown-menu");
+            var crisisSupportDiv = trigger.closest(".bg-white"); // Find the crisis support div
 
-        trigger.addEventListener("click", function (event) {
-            event.preventDefault();
-            menu.classList.toggle("hidden");
-            menu.style.right = "0"; // Align to the right of the crisis support div
-        });
+            trigger.addEventListener("click", function (event) {
+                event.preventDefault();
+                menu.classList.toggle("hidden");
+                menu.style.right = "0"; // Align to the right of the crisis support div
+            });
 
-        document.addEventListener("click", function (event) {
-            if (!menu.contains(event.target) && !trigger.contains(event.target)) {
-                menu.classList.add("hidden");
-            }
+            document.addEventListener("click", function (event) {
+                if (!menu.contains(event.target) && !trigger.contains(event.target)) {
+                    menu.classList.add("hidden");
+                }
+            });
         });
-    });
 
         // Search functionality
-        document.getElementById('search-resources').addEventListener('input', function(e) {
+        document.getElementById('search-resources').addEventListener('input', function (e) {
             const searchTerm = e.target.value.toLowerCase();
             // Add your search logic here
             console.log('Searching for:', searchTerm);
         });
     </script>
 </body>
-</html> 
+
+</html>

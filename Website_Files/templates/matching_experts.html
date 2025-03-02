@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Experts - ConnectO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3968',
+                        secondary: '#1560bd',
+                        light: '#d6eefd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation (reuse your existing navigation code) -->
+    
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Matching Experts</h1>
+                <p class="text-lg text-gray-600">Here are the experts that match your requirements</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for expert in experts %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user-tie text-primary text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800">{{ expert.full_name }}</h3>
+                                <p class="text-gray-600">{{ expert.category }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-map-marker-alt w-5"></i>
+                                <span class="ml-2">{{ expert.location }}</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-envelope w-5"></i>
+                                <span class="ml-2">{{ expert.email }}</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-phone w-5"></i>
+                                <span class="ml-2">{{ expert.contact }}</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="text-gray-600 text-sm">{{ expert.description }}</p>
+                        </div>
+
+                        <div class="mt-6 flex space-x-3">
+                            <a href="mailto:{{ expert.email }}" 
+                               class="flex-1 bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                <i class="fas fa-envelope mr-2"></i>
+                                Email
+                            </a>
+                            <a href="tel:{{ expert.contact }}" 
+                               class="flex-1 bg-primary hover:bg-secondary text-white text-center px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                                <i class="fas fa-phone mr-2"></i>
+                                Call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if not experts %}
+            <div class="text-center py-12">
+                <div class="text-gray-500">
+                    <i class="fas fa-user-slash text-5xl mb-4"></i>
+                    <p class="text-xl">No matching experts found</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html> 
