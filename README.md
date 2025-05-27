@@ -30,7 +30,7 @@ YT Link : https://www.youtube.com/watch?v=bfhYWPxHjqA
 
 ---
 
-## 🛠️ Tech Stack (Suggested)
+## 🛠️ Tech Stack
 
 - **Frontend**: HTML, CSS, JavaScript, TailwindCSS
 - **Backend**: Python, Flask
